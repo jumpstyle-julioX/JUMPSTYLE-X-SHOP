@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+
+<!-- ✅ ISSO É O QUE FALTAVA -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>jumpstyle-X shop :D</title>
+
+<style>
+:root {
+  --bg: #000;
+  --purple: #b66bff;
+  --purple-dark: #6f2dbd;
+  --text: #e6d9ff;
+}
+
+* {
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* ✅ AGORA RESPONDE NO MOBILE */
+#container {
+  border: 2px solid var(--purple);
+  padding: 24px;
+  width: 94vw;
+  max-width: 420px;
+  border-radius: 16px;
+}
+
+h1 {
+  text-align: center;
+  color: var(--purple);
+  margin-bottom: 18px;
+  font-size: 26px;
+}
+
+button {
+  width: 100%;
+  margin: 8px 0;
+  padding: 16px;
+  background: transparent;
+  color: var(--purple);
+  border: 2px solid var(--purple);
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+button:hover {
+  background: var(--purple-dark);
+  color: #fff;
+}
+
+.hidden {
+  display: none;
+}
+
+.lang-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.lang-buttons button {
+  flex: 1;
+}
+
+p {
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.notice {
+  font-size: 13px;
+  opacity: 0.8;
+  margin-top: 10px;
+  color: #ccc;
+}
+</style>
+</head>
+
+<body>
+
+<div id="container">
+
+<h1>jumpstyle-X shop :D</h1>
+
+<div id="main">
+  <button onclick="openTab('buy')">BUY SCRIPT / COMPRAR SCRIPT</button>
+  <button onclick="go('https://discord.gg/XpztTdGbN')">Discord server / servidor de discord</button>
+  <button onclick="openTab('how')">HOW TO USE / COMO USAR</button>
+  <button onclick="go('https://www.youtube.com/@jumpstyle_julioX')">YouTube Channel / canal de Youtube</button>
+</div>
+
+<div id="buy" class="hidden">
+  <button onclick="openTab('main')">← Back</button>
+  <div class="lang-buttons">
+    <button onclick="openTab('buy-es')">Español</button>
+    <button onclick="openTab('buy-en')">English</button>
+  </div>
+</div>
+
+<div id="buy-es" class="hidden">
+  <button onclick="openTab('buy')">← Back</button>
+  <p><b>Cómo comprar:</b><br>
+  Primero, crea un server de Discord, después crea un webhook. Si no sabes hacerlo, busca un tutorial en YouTube. Mándame tu oferta en privado.
+  </p>
+  <button onclick="go('https://discord.gg/nQANkNgK')">Chatea con el vendedor</button>
+</div>
+
+<div id="buy-en" class="hidden">
+  <button onclick="openTab('buy')">← Back</button>
+  <p><b>How to buy:</b><br>
+  First, create a Discord server, then create a webhook. If you don’t know how, check YouTube tutorials.
+  </p>
+  <button onclick="go('https://discord.gg/nQANkNgK')">Chat with the seller</button>
+</div>
+
+<div id="how" class="hidden">
+  <button onclick="openTab('main')">← Back</button>
+  <div class="lang-buttons">
+    <button onclick="openTab('how-es')">Español</button>
+    <button onclick="openTab('how-en')">English</button>
+  </div>
+</div>
+
+<div id="how-es" class="hidden">
+  <button onclick="openTab('how')">← Back</button>
+  <p>Explicación de uso…</p>
+</div>
+
+<div id="how-en" class="hidden">
+  <button onclick="openTab('how')">← Back</button>
+  <p>Usage explanation…</p>
+</div>
+
+</div>
+
+<script>
+function show(id) {
+  document.querySelectorAll('#container > div').forEach(d => d.classList.add('hidden'));
+  document.getElementById(id).classList.remove('hidden');
+}
+
+function openTab(id) {
+  show(id);
+  history.pushState({ tab: id }, "", "#" + id);
+}
+
+window.onpopstate = function(e) {
+  show((e.state && e.state.tab) || "main");
+};
+
+function go(url) {
+  window.open(url, "_blank");
+}
+</script>
+
+</body>
+  </html>
+  
