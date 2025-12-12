@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+
+<!-- ✅ ISSO É O QUE FALTAVA -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>jumpstyle-X shop :D</title>
+
+<style>
+:root {
+  --bg: #000;
+  --purple: #b66bff;
+  --purple-dark: #6f2dbd;
+  --text: #e6d9ff;
+}
+
+* {
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* ✅ AGORA RESPONDE NO MOBILE */
+#container {
+  border: 2px solid var(--purple);
+  padding: 24px;
+  width: 94vw;
+  max-width: 420px;
+  border-radius: 16px;
+}
+
+h1 {
+  text-align: center;
+  color: var(--purple);
+  margin-bottom: 18px;
+  font-size: 26px;
+}
+
+button {
+  width: 100%;
+  margin: 8px 0;
+  padding: 16px;
+  background: transparent;
+  color: var(--purple);
+  border: 2px solid var(--purple);
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+button:hover {
+  background: var(--purple-dark);
+  color: #fff;
+}
+
+.hidden {
+  display: none;
+}
+
+.lang-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.lang-buttons button {
+  flex: 1;
+}
+
+p {
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.notice {
+  font-size: 13px;
+  opacity: 0.8;
+  margin-top: 10px;
+  color: #ccc;
+}
+</style>
+</head>
+
+<body>
+
+<div id="container">
+
+<h1>jumpstyle-X shop :D</h1>
+
+<div id="main">
+  <button onclick="openTab('buy')">COMPRAR SCRIPT/COMPRAR A SCRIPT</button>
+  <button onclick="go('https://discord.gg/XpztTdGbN')">servidor do discord/servidor de discord</button>
+  <button onclick="openTab('how')">COMO USAR</button>
+  <button onclick="go('https://www.youtube.com/@jumpstyle_julioX')">canal do youtube/canal de Youtube</button>
+</div>
+
+<div id="buy" class="hidden">
+  <button onclick="openTab('main')">← Back</button>
+  <div class="lang-buttons">
+    <button onclick="openTab('buy-es')">Español</button>
+    <button onclick="openTab('buy-en')">portugues</button>
+  </div>
+</div>
+
+<div id="buy-es" class="hidden">
+  <button onclick="openTab('buy')">← Back</button>
+  <p><b>Cómo comprar:</b><br>
+  Primero,crea un server de discord,después crea un webhook,si no sabes hacer un webhook busca un tutorial en Youtube,mándame tu oferta en privado (solo brainrots de más de 50M,hago descuento si me encuentras en algún juego de Roblox),si veo la oferta aceptable te enviaré el link de mi servidor,cuando agarre el brainrot te escribiré de nuevo y pediré el link de tu webhook,cuando me des el link,quizás tarde un minuto o menos en ya crear tu script de scam:3 (Funciona en PC y Mobile; en PC se adapta dependiendo de tu DPI para mayor comodidad.)
+  </p>
+  <button onclick="go('https://discord.gg/nQANkNgK')">Chatea con el vendedor</button>
+</div>
+
+<div id="buy-en" class="hidden">
+  <button onclick="openTab('buy')">← Back</button>
+  <p><b>How to buy:</b><br>
+Primeiro, crie um servidor no Discord e depois um webhook. Se você não sabe como criar um webhook, procure um tutorial no YouTube. Envie-me sua oferta em particular (apenas brainrots acima de 50M ou 10 reais no pix, eu te dou um disconto de 50% se tu me achar em algum jogo do roblox). Se eu achar a oferta aceitável, enviarei o link do meu servidor. Quando eu pegar o brainrot, entrarei em contato novamente e pedirei o link do seu webhook. Depois que você me enviar o link, pode levar um minuto ou menos para eu criar seu script de golpe :3 (Funciona em PC e celular; no PC, ele se adapta à sua resolução (DPI) para maior conforto).
+    </p>
+  <button onclick="go('https://discord.gg/nQANkNgK')">Chat com o vendedor</button>
+</div>
+
+<div id="how" class="hidden">
+  <button onclick="openTab('main')">← Back</button>
+  <div class="lang-buttons">
+    <button onclick="openTab('how-es')">Español</button>
+    <button onclick="openTab('how-en')">portugues</button>
+  </div>
+</div>
+
+<div id="how-es" class="hidden">
+  <button onclick="openTab('how')">← Back</button>
+  <p>La persona va a pensar que está usando un script de auto Moreira,pero cuando el le de click a comenzar el auto Moreira su pantalla se pondrá completamente negra,no podra acceder al menu para salir del juego y te enviará el link del servidor de la víctima a la webhook que me enviaste,se inteligente para enviar el script y dile que aquella pantalla negra debería ser una pantalla con los usuarios que entran al server y por un error de escritura de código que el creador no sabe arreglar se quedó así XD</p>
+</div>
+
+<div id="how-en" class="hidden">
+  <button onclick="openTab('how')">← Back</button>
+  <p>A pessoa vai pensar que está usando um script de Auto Moreira, mas quando clicar para iniciar o Auto Moreira, a tela ficará completamente preta e ela não conseguirá acessar o menu para sair do jogo. Além disso, o link do servidor do Discord da pessoa será enviado para o seu webhook, permitindo que você entre facilmente e roube o quanto quiser (se ela não fechar o Roblox, rsrs). Seja esperto ao enviar o script e diga a ela que a tela preta deveria ser uma tela mostrando as pessoas que entraram no servidor graças ao bot, mas devido a um erro de digitação que o criador desconhece, o script permaneceu assim XD</p>
+</div>
+
+</div>
+
+<script>
+function show(id) {
+  document.querySelectorAll('#container > div').forEach(d => d.classList.add('hidden'));
+  document.getElementById(id).classList.remove('hidden');
+}
+
+function openTab(id) {
+  show(id);
+  history.pushState({ tab: id }, "", "#" + id);
+}
+
+window.onpopstate = function(e) {
+  show((e.state && e.state.tab) || "main");
+};
+
+function go(url) {
+  window.open(url, "_blank");
+}
+</script>
+
+</body>
+  </html>
+  
